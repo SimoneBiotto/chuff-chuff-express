@@ -1,0 +1,2 @@
+# Use sdkman to run "sdk env" to initialize with correct JDK version
+java=17.0.10-zulu

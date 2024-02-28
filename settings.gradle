@@ -1,1 +1,11 @@
 rootProject.name = 'chuff-chuff-express'
+include 'chuff-common'
+include 'chuff-ticket'
+include 'chuff-domain'
+include 'chuff-application'
+include 'chuff-train-service'
+include 'chuff-ticket-service'
+include 'chuff-ticket-service-api'
+include 'chuff-train-service-api'
+include 'chuff-train-service-api'
+
