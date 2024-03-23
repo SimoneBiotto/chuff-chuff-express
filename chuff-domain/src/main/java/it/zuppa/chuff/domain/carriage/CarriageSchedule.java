@@ -11,9 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CarriageSchedule extends BaseEntity {
-    @ManyToOne
-    private Schedule schedule;
-    @ManyToOne
-    private Carriage carriage;
-    private double multiplierPrice;
+  @ManyToOne private Schedule schedule;
+  @ManyToOne private Carriage carriage;
+  private double multiplierPrice;
 }

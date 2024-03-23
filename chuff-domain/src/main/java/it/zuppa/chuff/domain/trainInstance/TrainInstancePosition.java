@@ -13,16 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TrainInstancePosition extends BaseEntity {
-    @Embedded
-    private DateTime exceptedArrivalTime;
-    @Embedded
-    private DateTime exceptedDepartureTime;
-    @Embedded
-    private DateTime realArrivalTime;
-    @Embedded
-    private DateTime realDepartureTime;
-    @ManyToOne
-    private TrainInstance trainInstance;
-    @ManyToOne
-    private Station station;
+  @Embedded private DateTime exceptedArrivalTime;
+  @Embedded private DateTime exceptedDepartureTime;
+  @Embedded private DateTime realArrivalTime;
+  @Embedded private DateTime realDepartureTime;
+  @ManyToOne private TrainInstance trainInstance;
+  @ManyToOne private Station station;
 }

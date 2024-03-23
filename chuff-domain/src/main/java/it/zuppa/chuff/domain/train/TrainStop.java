@@ -13,12 +13,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class TrainStop extends BaseEntity {
-    @ManyToOne
-    private Train train;
-    @ManyToOne
-    private Station station;
-    @Embedded
-    private Time arrivalTime;
-    @Embedded
-    private Time departureTime;
+  @ManyToOne private Train train;
+  @ManyToOne private Station station;
+  @Embedded private Time arrivalTime;
+  @Embedded private Time departureTime;
 }

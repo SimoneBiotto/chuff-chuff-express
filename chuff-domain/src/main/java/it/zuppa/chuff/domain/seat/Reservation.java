@@ -7,15 +7,11 @@ import jakarta.persistence.*;
 
 @Entity
 public class Reservation extends BaseEntity {
-    @ManyToOne
-    private Seat seat;
-    @ManyToOne
-    private Station departureStation;
-    @ManyToOne
-    private Station arrivalStation;
-    @OneToOne
-    private Ticket ticket;
-    @Enumerated(EnumType.STRING)
-    private ReservationStatus status;
+  @ManyToOne private Seat seat;
+  @ManyToOne private Station departureStation;
+  @ManyToOne private Station arrivalStation;
+  @OneToOne private Ticket ticket;
 
+  @Enumerated(EnumType.STRING)
+  private ReservationStatus status;
 }

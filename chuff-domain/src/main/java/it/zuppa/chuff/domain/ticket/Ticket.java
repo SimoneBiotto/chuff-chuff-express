@@ -9,14 +9,12 @@ import jakarta.persistence.*;
 
 @Entity
 public class Ticket extends BaseEntity {
-    @Embedded
-    private Money price;
-    @OneToOne
-    private Reservation reservation;
-    @Enumerated(EnumType.STRING)
-    private TicketStatus status;
-    @ManyToOne
-    private Costumer costumer;
-    @ManyToOne
-    private Order order;
+  @Embedded private Money price;
+  @OneToOne private Reservation reservation;
+
+  @Enumerated(EnumType.STRING)
+  private TicketStatus status;
+
+  @ManyToOne private Costumer costumer;
+  @ManyToOne private Order order;
 }

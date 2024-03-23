@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Save staged files in a variable
+stagedFiles=$(git diff --staged --name-only)
+
+# Run spotless task to format code
+echo "Running spotlessApply. Formatting code..."
+./gradlew spotlessApply
+
+# Stage the formatted files
+for file in $stagedFiles; do
+  if test -f "$file"; then
+    git add $file
+  fi
+done
