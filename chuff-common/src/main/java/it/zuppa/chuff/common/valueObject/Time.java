@@ -15,6 +15,10 @@ public class Time {
     setTime(time);
   }
 
+  public Time() {
+    setTime(LocalTime.now());
+  }
+
   @Override
   public String toString() {
     return time.toString();
@@ -39,9 +43,5 @@ public class Time {
 
   public void setTime(LocalTime time) {
     this.time = time;
-  }
-
-  public Time() {
-    setTime(LocalTime.now());
   }
 }

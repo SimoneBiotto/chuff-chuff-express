@@ -21,6 +21,9 @@ subprojects {
             googleJavaFormat()
         }
     }
+    test {
+        useJUnitPlatform()
+    }
 
 }
 version = "${version}"

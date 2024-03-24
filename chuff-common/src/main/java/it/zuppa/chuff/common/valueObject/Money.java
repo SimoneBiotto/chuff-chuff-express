@@ -30,6 +30,14 @@ public class Money {
     return Objects.equals(amount, money.amount);
   }
 
+  public boolean isGreaterThan(Money other) {
+    return this.amount.compareTo(other.amount) > 0;
+  }
+
+  public boolean isGreaterThanOrEqual(Money other) {
+    return this.amount.compareTo(other.amount) >= 0;
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(amount);
@@ -48,11 +56,11 @@ public class Money {
     return new Money(this.amount.subtract(delta.amount));
   }
 
-  public Money multiply(Money delta) {
-    return new Money(this.amount.multiply(delta.amount));
+  public Money multiply(Integer multiplier) {
+    return new Money(this.amount.multiply(new BigDecimal(multiplier)));
   }
 
-  public Money divide(Money delta) {
-    return new Money(this.amount.divide(delta.amount, RoundingMode.HALF_UP));
+  public Money divide(Integer divisor) {
+    return new Money(this.amount.divide(new BigDecimal(divisor), RoundingMode.HALF_UP));
   }
 }
