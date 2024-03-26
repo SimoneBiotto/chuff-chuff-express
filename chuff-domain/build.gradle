@@ -2,5 +2,5 @@ dependencies {
     implementation project(":chuff-common")
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
     implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'org.projectlombok:lombok:1.18.24'
+    implementation "org.projectlombok:lombok:$lombokVersion"
 }

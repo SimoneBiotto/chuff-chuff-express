@@ -1,4 +1,4 @@
-package it.zuppa.chuff.domain.user;
+package it.zuppa.chuff.domain.costumer;
 
 import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.domain.order.Order;

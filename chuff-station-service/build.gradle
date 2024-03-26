@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":chuff-common")
+    implementation project(":chuff-domain")
+}

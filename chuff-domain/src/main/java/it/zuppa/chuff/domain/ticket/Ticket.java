@@ -2,9 +2,9 @@ package it.zuppa.chuff.domain.ticket;
 
 import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.common.valueObject.Money;
+import it.zuppa.chuff.domain.costumer.Costumer;
 import it.zuppa.chuff.domain.order.Order;
 import it.zuppa.chuff.domain.seat.Reservation;
-import it.zuppa.chuff.domain.user.Costumer;
 import jakarta.persistence.*;
 
 @Entity

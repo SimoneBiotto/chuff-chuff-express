@@ -9,10 +9,17 @@ import lombok.*;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Line extends BaseEntity {
   private String type;
   private String code;
 
   @OneToMany(mappedBy = "line")
   private List<Train> trainList;
+
+  public String getLine() {
+    return type + code;
+  }
 }
