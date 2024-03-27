@@ -5,6 +5,19 @@ plugins {
     id 'com.diffplug.spotless' version "$spotlessVersion"
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'com.diffplug.spotless'
@@ -25,6 +38,13 @@ subprojects {
         useJUnitPlatform()
     }
 
+    bootJar {
+        enabled = false
+    }
+
+    jar {
+        enabled = true
+    }
 }
 version = "${version}"
 
