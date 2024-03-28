@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.DeleteLineRequest;
 import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
 import java.util.UUID;
@@ -36,24 +35,12 @@ public class LineDataMapperTest {
   }
 
   @Test
-  public void itShouldReturnLineFromDeleteLineRequest() {
-    DeleteLineRequest deleteLineRequest =
-        DeleteLineRequest.builder().type(type).code(code).id(id).build();
-    Line line = mapper.deleteLineRequestToLine(deleteLineRequest);
-    assertEquals(code, line.getCode());
-    assertEquals(type, line.getType());
-    assertEquals(id, line.getId());
-  }
-
-  @Test
   public void itShouldReturnLineResponseFromLine() {
     Line line = Line.builder().code(code).type(type).build();
     line.setId(id);
-    String message = "message";
-    LineResponse lineResponse = mapper.lineToLineResponse(line, message);
+    LineResponse lineResponse = mapper.lineToLineResponse(line);
     assertEquals(code, lineResponse.code());
     assertEquals(type, lineResponse.type());
     assertEquals(id, lineResponse.id());
-    assertEquals(message, lineResponse.message());
   }
 }

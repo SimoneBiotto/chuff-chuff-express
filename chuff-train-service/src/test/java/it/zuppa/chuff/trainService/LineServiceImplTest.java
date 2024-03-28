@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.DeleteLineRequest;
 import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
 import it.zuppa.chuff.trainService.mapper.LineDataMapper;
@@ -39,26 +38,16 @@ public class LineServiceImplTest {
     CreateLineRequest request = CreateLineRequest.builder().type(type).code(code).build();
     Line line = Line.builder().type(type).code(code).build();
     line.setId(UUID.randomUUID());
-    LineResponse response =
-        LineResponse.builder()
-            .id(line.getId())
-            .type(type)
-            .code(code)
-            .message("Line created successfully with id " + line.getId())
-            .build();
+    LineResponse response = LineResponse.builder().id(line.getId()).type(type).code(code).build();
     Mockito.when(repository.findByTypeAndCode(type, code)).thenReturn(Optional.empty());
     Mockito.when(repository.createLine(line)).thenReturn(line);
     Mockito.when(lineDataMapper.createLineRequestToLine(request)).thenReturn(line);
-    Mockito.when(
-            lineDataMapper.lineToLineResponse(
-                line, "Line created successfully with id " + line.getId()))
-        .thenReturn(response);
+    Mockito.when(lineDataMapper.lineToLineResponse(line)).thenReturn(response);
     LineResponse result = lineService.createLine(request);
     assertNotNull(result);
     assertEquals(response.id(), result.id());
     assertEquals(response.type(), result.type());
     assertEquals(response.code(), result.code());
-    assertEquals(response.message(), result.message());
   }
 
   @Test
@@ -95,27 +84,23 @@ public class LineServiceImplTest {
 
   @Test
   public void itShouldDeleteLineWhenDeleteLineIsValid() throws DomainException {
-    DeleteLineRequest request =
-        DeleteLineRequest.builder().id(UUID.randomUUID()).type(type).code(code).build();
     Line line = Line.builder().type(type).code(code).build();
-    line.setId(request.id());
     line.setId(UUID.randomUUID());
-    Mockito.when(repository.findByTypeAndCode(type, code)).thenReturn(Optional.of(line));
+    Mockito.when(repository.findById(line.getId())).thenReturn(Optional.of(line));
     Mockito.when(repository.deleteLine(line)).thenReturn(Optional.of(line));
-    lineService.deleteLine(request);
+    lineService.deleteLine(line.getId());
     Mockito.verify(repository, Mockito.times(1)).deleteLine(line);
   }
 
   @Test
   public void itShouldThrowExceptionWhenLineIsNotFound() {
-    DeleteLineRequest request =
-        DeleteLineRequest.builder().id(UUID.randomUUID()).type(type).code(code).build();
-    Mockito.when(repository.findByTypeAndCode(type, code)).thenReturn(Optional.empty());
+
+    Mockito.when(repository.findById(Mockito.any(UUID.class))).thenReturn(Optional.empty());
     DomainException thrown =
         assertThrows(
             DomainException.class,
             () -> {
-              lineService.deleteLine(request);
+              lineService.deleteLine(UUID.randomUUID());
             });
     assertEquals(DomainException.Reason.RESOURCE_NOT_FOUND, thrown.getReason());
     assertEquals(Line.class, thrown.getDomainClass());
@@ -133,19 +118,13 @@ public class LineServiceImplTest {
     line.setId(request.id());
     Line lineChanged = Line.builder().type(request.type()).code(request.code()).build();
     LineResponse response =
-        LineResponse.builder()
-            .id(request.id())
-            .type(request.type())
-            .code(request.code())
-            .message("Line edited successfully with id " + request.id())
-            .build();
+        LineResponse.builder().id(request.id()).type(request.type()).code(request.code()).build();
     lineChanged.setId(request.id());
     line.setId(request.id());
     Mockito.when(repository.findById(request.id())).thenReturn(Optional.of(line));
     ArgumentCaptor<Line> lineArgumentCaptor = ArgumentCaptor.forClass(Line.class);
     Mockito.when(repository.updateLine(line)).thenReturn(Optional.of(lineChanged));
-    Mockito.when(lineDataMapper.lineToLineResponse(Mockito.eq(lineChanged), Mockito.anyString()))
-        .thenReturn(response);
+    Mockito.when(lineDataMapper.lineToLineResponse(Mockito.eq(lineChanged))).thenReturn(response);
 
     LineResponse lineResponse = lineService.editLine(request);
 
@@ -156,7 +135,6 @@ public class LineServiceImplTest {
     assertEquals(lineResponse.id(), response.id());
     assertEquals(lineResponse.type(), response.type());
     assertEquals(lineResponse.code(), response.code());
-    assertEquals(lineResponse.message(), response.message());
   }
 
   @Test

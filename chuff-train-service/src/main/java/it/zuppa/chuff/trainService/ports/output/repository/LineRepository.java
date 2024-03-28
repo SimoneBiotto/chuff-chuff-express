@@ -5,13 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface LineRepository {
-  public Line createLine(Line line);
+  Line createLine(Line line);
 
-  public Optional<Line> findById(UUID uuid);
+  Optional<Line> findById(UUID uuid);
 
-  public Optional<Line> findByTypeAndCode(String type, String code);
+  Optional<Line> findByTypeAndCode(String type, String code);
 
-  public Optional<Line> updateLine(Line line);
+  Optional<Line> updateLine(Line line);
 
-  public Optional<Line> deleteLine(Line line);
+  Optional<Line> deleteLine(Line line);
 }

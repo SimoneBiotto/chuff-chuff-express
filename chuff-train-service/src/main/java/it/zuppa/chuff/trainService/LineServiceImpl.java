@@ -3,12 +3,12 @@ package it.zuppa.chuff.trainService;
 import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.DeleteLineRequest;
 import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
 import it.zuppa.chuff.trainService.mapper.LineDataMapper;
 import it.zuppa.chuff.trainService.ports.input.service.LineService;
 import it.zuppa.chuff.trainService.ports.output.repository.LineRepository;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -50,14 +50,14 @@ public class LineServiceImpl implements LineService {
       throw new DomainException(message, DomainException.Reason.GENERIC_ERROR, Line.class);
     }
     log.info("Line created successfully with id {}", line.getId());
-    return mapper.lineToLineResponse(line, "Line created successfully with id " + line.getId());
+    return mapper.lineToLineResponse(line);
   }
 
   @Override
-  public void deleteLine(DeleteLineRequest deleteLineRequest) throws DomainException {
+  public void deleteLine(UUID id) throws DomainException {
     Line line =
         repository
-            .findByTypeAndCode(deleteLineRequest.type(), deleteLineRequest.code())
+            .findById(id)
             .orElseThrow(
                 () ->
                     new DomainException(
@@ -87,7 +87,6 @@ public class LineServiceImpl implements LineService {
                     new DomainException(
                         "Could not update Line", DomainException.Reason.GENERIC_ERROR, Line.class));
     log.info("Line updated successfully with id {}", updatedLine.getId());
-    return mapper.lineToLineResponse(
-        updatedLine, "Line updated successfully with id " + updatedLine.getId());
+    return mapper.lineToLineResponse(updatedLine);
   }
 }
