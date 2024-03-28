@@ -6,12 +6,18 @@ import it.zuppa.chuff.domain.train.TrainStop;
 import it.zuppa.chuff.domain.trainInstance.TrainInstancePosition;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.util.List;
 import lombok.*;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"code"})})
 public class Station extends BaseEntity {
   private String code;
   private String name;

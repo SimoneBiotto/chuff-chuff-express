@@ -45,6 +45,10 @@ subprojects {
     jar {
         enabled = true
     }
+
+    dependencies {
+        testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    }
 }
 version = "${version}"
 
