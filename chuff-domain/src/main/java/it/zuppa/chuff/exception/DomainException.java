@@ -2,17 +2,22 @@ package it.zuppa.chuff.exception;
 
 import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.common.exception.ChuffChuffException;
+import lombok.Getter;
 
+@Getter
 public class DomainException extends ChuffChuffException {
   private Class<? extends BaseEntity> domainClass;
-  private Reason reason;
+  private final Reason reason;
 
   public DomainException(String message, Reason reason) {
     super(reason.message + ": " + message);
+    this.reason = reason;
   }
 
   public DomainException(String message, Reason reason, Class<? extends BaseEntity> domainClass) {
     super(reason.message + " (" + domainClass.getName() + "): " + message);
+    this.reason = reason;
+    this.domainClass = domainClass;
   }
 
   public enum Reason {

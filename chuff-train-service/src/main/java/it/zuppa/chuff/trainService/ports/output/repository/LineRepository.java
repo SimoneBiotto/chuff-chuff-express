@@ -11,5 +11,7 @@ public interface LineRepository {
 
   public Optional<Line> findByTypeAndCode(String type, String code);
 
+  public Optional<Line> updateLine(Line line);
+
   public Optional<Line> deleteLine(Line line);
 }

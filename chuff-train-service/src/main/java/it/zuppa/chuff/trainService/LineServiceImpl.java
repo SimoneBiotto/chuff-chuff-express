@@ -16,9 +16,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LineServiceImpl implements LineService {
   private final LineRepository repository;
+  private final LineDataMapper mapper;
 
-  public LineServiceImpl(LineRepository repository) {
+  public LineServiceImpl(LineRepository repository, LineDataMapper mapper) {
     this.repository = repository;
+    this.mapper = mapper;
   }
 
   @Override
@@ -38,7 +40,7 @@ public class LineServiceImpl implements LineService {
             + createLineRequest.type()
             + " and code "
             + createLineRequest.code());
-    Line line = repository.createLine(LineDataMapper.createLineRequestToLine(createLineRequest));
+    Line line = repository.createLine(mapper.createLineRequestToLine(createLineRequest));
     if (line == null) {
       String message =
           String.format(
@@ -48,8 +50,7 @@ public class LineServiceImpl implements LineService {
       throw new DomainException(message, DomainException.Reason.GENERIC_ERROR, Line.class);
     }
     log.info("Line created successfully with id {}", line.getId());
-    return LineDataMapper.lineToLineResponse(
-        line, "Line created successfully with id " + line.getId());
+    return mapper.lineToLineResponse(line, "Line created successfully with id " + line.getId());
   }
 
   @Override
@@ -78,14 +79,15 @@ public class LineServiceImpl implements LineService {
                         Line.class));
     line.setCode(editLineRequest.code());
     line.setType(editLineRequest.type());
-    Line updatedLine = repository.createLine(line);
-    if (updatedLine == null) {
-      String message = String.format("Could not update Line with id: %s", editLineRequest.id());
-      log.error(message);
-      throw new DomainException(message, DomainException.Reason.GENERIC_ERROR, Line.class);
-    }
+    Line updatedLine =
+        repository
+            .updateLine(line)
+            .orElseThrow(
+                () ->
+                    new DomainException(
+                        "Could not update Line", DomainException.Reason.GENERIC_ERROR, Line.class));
     log.info("Line updated successfully with id {}", updatedLine.getId());
-    return LineDataMapper.lineToLineResponse(
+    return mapper.lineToLineResponse(
         updatedLine, "Line updated successfully with id " + updatedLine.getId());
   }
 }
