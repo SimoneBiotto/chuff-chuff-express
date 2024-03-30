@@ -23,6 +23,7 @@ public class DomainException extends ChuffChuffException {
   public enum Reason {
     DUPLICATE_RESOURCE("Resource Duplicated"),
     RESOURCE_NOT_FOUND("Resource Not Found"),
+    ERROR_DURING_SAVING("Error During Saving"),
     GENERIC_ERROR("Generic Error");
 
     public final String message;

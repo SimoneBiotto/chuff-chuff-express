@@ -4,10 +4,8 @@ import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.domain.train.Train;
 import it.zuppa.chuff.domain.train.TrainStop;
 import it.zuppa.chuff.domain.trainInstance.TrainInstancePosition;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
+
 import java.util.List;
 import lombok.*;
 
@@ -21,6 +19,9 @@ import lombok.*;
 public class Station extends BaseEntity {
   private String code;
   private String name;
+  private boolean enabled;
+  @Enumerated(EnumType.STRING)
+  private StationType stationType;
 
   @OneToMany(mappedBy = "departureStation")
   private List<Train> departureTrainList;

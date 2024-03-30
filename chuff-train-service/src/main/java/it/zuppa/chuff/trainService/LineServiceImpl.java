@@ -47,7 +47,7 @@ public class LineServiceImpl implements LineService {
               "Could not save Line with type and code: %s %s",
               createLineRequest.type(), createLineRequest.code());
       log.error(message);
-      throw new DomainException(message, DomainException.Reason.GENERIC_ERROR, Line.class);
+      throw new DomainException(message, DomainException.Reason.ERROR_DURING_SAVING, Line.class);
     }
     log.info("Line created successfully with id {}", line.getId());
     return mapper.lineToLineResponse(line);
@@ -77,6 +77,7 @@ public class LineServiceImpl implements LineService {
                         "Line not found with id: " + editLineRequest.id(),
                         DomainException.Reason.RESOURCE_NOT_FOUND,
                         Line.class));
+    log.info("Editing line with id {}", editLineRequest.id());
     line.setCode(editLineRequest.code());
     line.setType(editLineRequest.type());
     Line updatedLine =
@@ -85,7 +86,7 @@ public class LineServiceImpl implements LineService {
             .orElseThrow(
                 () ->
                     new DomainException(
-                        "Could not update Line", DomainException.Reason.GENERIC_ERROR, Line.class));
+                        "Could not update Line", DomainException.Reason.ERROR_DURING_SAVING, Line.class));
     log.info("Line updated successfully with id {}", updatedLine.getId());
     return mapper.lineToLineResponse(updatedLine);
   }
