@@ -5,5 +5,5 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record SearchStationRequest(
-    UUID id, String code, String name, boolean enable, StationType stationType) {}
+public record StationCompactResponse(
+    UUID id, String code, String name, boolean enable, StationType type) {}

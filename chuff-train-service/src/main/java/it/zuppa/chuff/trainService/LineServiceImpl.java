@@ -86,7 +86,9 @@ public class LineServiceImpl implements LineService {
             .orElseThrow(
                 () ->
                     new DomainException(
-                        "Could not update Line", DomainException.Reason.ERROR_DURING_SAVING, Line.class));
+                        "Could not update Line",
+                        DomainException.Reason.ERROR_DURING_SAVING,
+                        Line.class));
     log.info("Line updated successfully with id {}", updatedLine.getId());
     return mapper.lineToLineResponse(updatedLine);
   }

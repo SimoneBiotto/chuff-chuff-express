@@ -5,7 +5,6 @@ import it.zuppa.chuff.domain.train.Train;
 import it.zuppa.chuff.domain.train.TrainStop;
 import it.zuppa.chuff.domain.trainInstance.TrainInstancePosition;
 import jakarta.persistence.*;
-
 import java.util.List;
 import lombok.*;
 
@@ -19,7 +18,8 @@ import lombok.*;
 public class Station extends BaseEntity {
   private String code;
   private String name;
-  private boolean enabled = true;
+  @Builder.Default private boolean enabled = true;
+
   @Enumerated(EnumType.STRING)
   private StationType stationType;
 
