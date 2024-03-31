@@ -22,4 +22,6 @@ public interface StationService {
   Optional<StationResponseCompact> searchStationBySearchStationRequest(@Valid SearchStationRequest searchStationRequest) throws InvalidParameterException;
 
   List<StationResponseCompact> searchAllStationSearchStationRequest(@Valid SearchStationRequest searchStationRequest) throws InvalidParameterException;
+
+  StationResponseCompact toggleStationStatus(UUID id, boolean enable) throws DomainException;
 }

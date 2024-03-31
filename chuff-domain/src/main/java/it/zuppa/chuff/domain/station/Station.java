@@ -19,7 +19,7 @@ import lombok.*;
 public class Station extends BaseEntity {
   private String code;
   private String name;
-  private boolean enabled;
+  private boolean enabled = true;
   @Enumerated(EnumType.STRING)
   private StationType stationType;
 

@@ -90,5 +90,19 @@ public class StationServiceImpl implements StationService {
         List<Station> stations = repository.searchAllBySearchStationDto(mapper.searchStationRequestToSearchStationDto(searchStationRequest));
         return stations.stream().map(mapper::stationToStationCompactResponse).toList();
     }
+
+    @Override
+    public StationResponseCompact toggleStationStatus(UUID id, boolean enable) throws DomainException {
+        Station station = repository.findById(id).orElseThrow(() -> new DomainException("Station not found with id" + id, DomainException.Reason.RESOURCE_NOT_FOUND, Station.class));
+        log.info("Toggling station status to {} (id: {})",enable , id);
+        if (enable == station.isEnabled()) {
+            log.info("Station already in requested status {} (id: {})", enable, id);
+            return mapper.stationToStationCompactResponse(station);
+        }
+        station.setEnabled(enable);
+        Station updatedStation = repository.updateStation(station).orElseThrow(() -> new DomainException("Could not update station with id" + id, DomainException.Reason.ERROR_DURING_SAVING, Station.class));
+        log.info("Station status toggled successfully (id: {})", updatedStation.getId());
+        return mapper.stationToStationCompactResponse(updatedStation);
+    }
 }
 
