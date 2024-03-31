@@ -78,7 +78,7 @@ public class LineServiceImplTest {
             () -> {
               lineService.createLine(request);
             });
-    assertEquals(DomainException.Reason.GENERIC_ERROR, thrown.getReason());
+    assertEquals(DomainException.Reason.ERROR_DURING_SAVING, thrown.getReason());
     assertEquals(Line.class, thrown.getDomainClass());
   }
 
@@ -174,7 +174,7 @@ public class LineServiceImplTest {
             () -> {
               lineService.editLine(request);
             });
-    assertEquals(DomainException.Reason.GENERIC_ERROR, thrown.getReason());
+    assertEquals(DomainException.Reason.ERROR_DURING_SAVING, thrown.getReason());
     assertEquals(Line.class, thrown.getDomainClass());
   }
 }
