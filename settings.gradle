@@ -5,3 +5,5 @@ include 'chuff-train-service'
 include 'chuff-ticket-service'
 include 'chuff-application'
 include 'chuff-station-service'
+include 'chuff-schedule-service'
+
