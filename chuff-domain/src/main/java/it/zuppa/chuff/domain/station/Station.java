@@ -4,6 +4,7 @@ import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.domain.train.Train;
 import it.zuppa.chuff.domain.train.TrainStop;
 import it.zuppa.chuff.domain.trainInstance.TrainInstancePosition;
+import it.zuppa.chuff.valueObject.StationType;
 import jakarta.persistence.*;
 import java.util.List;
 import lombok.*;

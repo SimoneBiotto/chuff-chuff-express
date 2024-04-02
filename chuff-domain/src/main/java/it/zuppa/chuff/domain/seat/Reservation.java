@@ -3,6 +3,7 @@ package it.zuppa.chuff.domain.seat;
 import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.domain.station.Station;
 import it.zuppa.chuff.domain.ticket.Ticket;
+import it.zuppa.chuff.valueObject.ReservationStatus;
 import jakarta.persistence.*;
 
 @Entity

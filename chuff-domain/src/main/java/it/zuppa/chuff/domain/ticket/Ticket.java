@@ -5,6 +5,7 @@ import it.zuppa.chuff.common.valueObject.Money;
 import it.zuppa.chuff.domain.costumer.Costumer;
 import it.zuppa.chuff.domain.order.Order;
 import it.zuppa.chuff.domain.seat.Reservation;
+import it.zuppa.chuff.valueObject.TicketStatus;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,4 +1,4 @@
-package it.zuppa.chuff.domain.seat;
+package it.zuppa.chuff.valueObject;
 
 public enum ReservationStatus {
   PENDING,

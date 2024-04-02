@@ -1,6 +1,6 @@
 package it.zuppa.chuff.scheduleService.dto.schedule;
 
-import it.zuppa.chuff.domain.schedule.ScheduleType;
+import it.zuppa.chuff.valueObject.ScheduleType;
 import java.time.DayOfWeek;
 import java.util.UUID;
 import lombok.Builder;

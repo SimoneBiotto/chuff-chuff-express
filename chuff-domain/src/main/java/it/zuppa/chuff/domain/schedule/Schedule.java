@@ -3,6 +3,7 @@ package it.zuppa.chuff.domain.schedule;
 import it.zuppa.chuff.common.entity.BaseEntity;
 import it.zuppa.chuff.domain.carriage.Carriage;
 import it.zuppa.chuff.domain.train.Train;
+import it.zuppa.chuff.valueObject.ScheduleType;
 import jakarta.persistence.*;
 import java.time.DayOfWeek;
 import java.util.List;

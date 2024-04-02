@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import it.zuppa.chuff.domain.station.Station;
-import it.zuppa.chuff.domain.station.StationType;
+import it.zuppa.chuff.valueObject.StationType;
 import it.zuppa.chuff.domain.train.Train;
 import it.zuppa.chuff.stationService.dto.station.*;
 import java.util.ArrayList;

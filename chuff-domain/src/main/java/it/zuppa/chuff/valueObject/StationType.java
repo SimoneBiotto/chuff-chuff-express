@@ -1,4 +1,4 @@
-package it.zuppa.chuff.domain.station;
+package it.zuppa.chuff.valueObject;
 
 public enum StationType {
   CARGO,

@@ -1,4 +1,4 @@
-package it.zuppa.chuff.domain.ticket;
+package it.zuppa.chuff.valueObject;
 
 public enum TicketStatus {
   PENDING,

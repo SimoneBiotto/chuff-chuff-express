@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import it.zuppa.chuff.domain.schedule.Schedule;
-import it.zuppa.chuff.domain.schedule.ScheduleType;
+import it.zuppa.chuff.valueObject.ScheduleType;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.scheduleService.dto.schedule.CreateScheduleRequest;
 import it.zuppa.chuff.scheduleService.dto.schedule.ScheduleResponse;

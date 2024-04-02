@@ -3,7 +3,7 @@ package it.zuppa.chuff.stationService;
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.zuppa.chuff.domain.station.Station;
-import it.zuppa.chuff.domain.station.StationType;
+import it.zuppa.chuff.valueObject.StationType;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.stationService.dto.station.*;
 import it.zuppa.chuff.stationService.mapper.StationDataMapper;

@@ -1,4 +1,4 @@
-package it.zuppa.chuff.domain.schedule;
+package it.zuppa.chuff.valueObject;
 
 public enum ScheduleType {
   OCCASIONALLY,

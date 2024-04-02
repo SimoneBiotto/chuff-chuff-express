@@ -1,4 +1,4 @@
-package it.zuppa.chuff.domain.order;
+package it.zuppa.chuff.valueObject;
 
 public enum OrderStatus {
   // TODO check if there are other state
