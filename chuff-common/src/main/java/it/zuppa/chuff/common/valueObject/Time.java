@@ -48,4 +48,28 @@ public class Time {
   public boolean isAfter(Time other) {
     return this.getTime().isAfter(other.getTime());
   }
+
+  public Time plusHours(long hours) {
+    return new Time(time.plusHours(hours));
+  }
+
+public Time minusHours(long hours) {
+    return new Time(time.minusHours(hours));
+  }
+
+    public Time plusMinutes(long minutes) {
+        return new Time(time.plusMinutes(minutes));
+    }
+
+    public Time minusMinutes(long minutes) {
+        return new Time(time.minusMinutes(minutes));
+    }
+
+    public Time plusSeconds(long seconds) {
+        return new Time(time.plusSeconds(seconds));
+    }
+
+    public Time minusSeconds(long seconds) {
+        return new Time(time.minusSeconds(seconds));
+    }
 }

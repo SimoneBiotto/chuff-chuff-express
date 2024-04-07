@@ -43,4 +43,12 @@ public class Date {
   public boolean isAfter(Date other) {
     return this.getDate().isAfter(other.getDate());
   }
+
+  public Date plusDays(long days) {
+    return new Date(date.plusDays(days));
+  }
+  public Date minusDays(long days) {
+    return new Date(date.minusDays(days));
+  }
+
 }
