@@ -3,16 +3,16 @@ package it.zuppa.chuff.trainService;
 import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
+import it.zuppa.chuff.trainService.dto.line.UpdateLineRequest;
 import it.zuppa.chuff.trainService.mapper.LineDataMapper;
 import it.zuppa.chuff.trainService.ports.input.service.LineService;
 import it.zuppa.chuff.trainService.ports.output.repository.LineRepository;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @Slf4j
 public class LineServiceImpl implements LineService {
   private final LineRepository repository;
@@ -67,19 +67,19 @@ public class LineServiceImpl implements LineService {
   }
 
   @Override
-  public LineResponse editLine(EditLineRequest editLineRequest) throws DomainException {
+  public LineResponse editLine(UpdateLineRequest updateLineRequest) throws DomainException {
     Line line =
         repository
-            .findById(editLineRequest.id())
+            .findById(updateLineRequest.id())
             .orElseThrow(
                 () ->
                     new DomainException(
-                        "Line not found with id: " + editLineRequest.id(),
+                        "Line not found with id: " + updateLineRequest.id(),
                         DomainException.Reason.RESOURCE_NOT_FOUND,
                         Line.class));
-    log.info("Editing line with id {}", editLineRequest.id());
-    line.setCode(editLineRequest.code());
-    line.setType(editLineRequest.type());
+    log.info("Editing line with id {}", updateLineRequest.id());
+    line.setCode(updateLineRequest.code());
+    line.setType(updateLineRequest.type());
     Line updatedLine =
         repository
             .updateLine(line)
@@ -91,5 +91,11 @@ public class LineServiceImpl implements LineService {
                         Line.class));
     log.info("Line updated successfully with id {}", updatedLine.getId());
     return mapper.lineToLineResponse(updatedLine);
+  }
+
+  @Override
+  public Line getLine(UUID id) {
+    if (id == null) return null;
+    return repository.findById(id).orElse(null);
   }
 }

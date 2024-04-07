@@ -1,7 +1,7 @@
 package it.zuppa.chuff.stationService.dto.station;
 
-import it.zuppa.chuff.valueObject.StationType;
 import it.zuppa.chuff.domain.train.Train;
+import it.zuppa.chuff.valueObject.StationType;
 import java.util.List;
 import java.util.UUID;
 import lombok.Builder;

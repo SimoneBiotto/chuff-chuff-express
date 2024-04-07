@@ -1,9 +1,10 @@
 package it.zuppa.chuff.trainService.ports.input.service;
 
+import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
+import it.zuppa.chuff.trainService.dto.line.UpdateLineRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,5 +15,7 @@ public interface LineService {
 
   void deleteLine(@NotBlank @NotNull UUID deleteLineRequest) throws DomainException;
 
-  LineResponse editLine(@Valid EditLineRequest editLineRequest) throws DomainException;
+  LineResponse editLine(@Valid UpdateLineRequest updateLineRequest) throws DomainException;
+
+  Line getLine(@NotNull UUID id);
 }

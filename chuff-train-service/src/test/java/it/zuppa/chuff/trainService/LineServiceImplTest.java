@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
+import it.zuppa.chuff.trainService.dto.line.UpdateLineRequest;
 import it.zuppa.chuff.trainService.mapper.LineDataMapper;
 import it.zuppa.chuff.trainService.ports.output.repository.LineRepository;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -31,6 +33,11 @@ public class LineServiceImplTest {
     repository = Mockito.mock(LineRepository.class);
     lineDataMapper = Mockito.mock(LineDataMapper.class);
     lineService = new LineServiceImpl(repository, lineDataMapper);
+  }
+
+  @AfterEach
+  public void reset() {
+    Mockito.reset(repository, lineDataMapper);
   }
 
   @Test
@@ -107,9 +114,9 @@ public class LineServiceImplTest {
   }
 
   @Test
-  public void itShouldEditLineWhenEditLineIsValid() throws DomainException {
-    EditLineRequest request =
-        EditLineRequest.builder()
+  public void itShouldEditLineWhenUpdateLineIsValid() throws DomainException {
+    UpdateLineRequest request =
+        UpdateLineRequest.builder()
             .id(UUID.randomUUID())
             .type("typeChanged")
             .code("codeChanged")
@@ -139,8 +146,8 @@ public class LineServiceImplTest {
 
   @Test
   public void itShouldThrowExceptionWhenLineIsNotFoundForEdit() {
-    EditLineRequest request =
-        EditLineRequest.builder()
+    UpdateLineRequest request =
+        UpdateLineRequest.builder()
             .id(UUID.randomUUID())
             .type("typeChanged")
             .code("codeChanged")
@@ -158,8 +165,8 @@ public class LineServiceImplTest {
 
   @Test
   public void itShouldThrowExceptionWhenLineIsNotUpdated() {
-    EditLineRequest request =
-        EditLineRequest.builder()
+    UpdateLineRequest request =
+        UpdateLineRequest.builder()
             .id(UUID.randomUUID())
             .type("typeChanged")
             .code("codeChanged")

@@ -99,9 +99,9 @@ public class StationServiceImpl implements StationService {
   }
 
   @Override
-  public StationResponse getStation(UUID id) {
+  public Station getStation(UUID id) {
     if (id == null) return null;
-    return repository.findById(id).map(mapper::stationToStationResponse).orElse(null);
+    return repository.findById(id).orElse(null);
   }
 
   @Override

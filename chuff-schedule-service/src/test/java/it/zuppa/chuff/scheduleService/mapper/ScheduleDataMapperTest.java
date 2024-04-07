@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import it.zuppa.chuff.domain.schedule.Schedule;
-import it.zuppa.chuff.valueObject.ScheduleType;
 import it.zuppa.chuff.scheduleService.dto.schedule.CreateScheduleRequest;
 import it.zuppa.chuff.scheduleService.dto.schedule.ScheduleResponse;
+import it.zuppa.chuff.valueObject.ScheduleType;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.UUID;

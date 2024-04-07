@@ -3,11 +3,11 @@ package it.zuppa.chuff.stationService;
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.zuppa.chuff.domain.station.Station;
-import it.zuppa.chuff.valueObject.StationType;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.stationService.dto.station.*;
 import it.zuppa.chuff.stationService.mapper.StationDataMapper;
 import it.zuppa.chuff.stationService.ports.output.repository.StationRepository;
+import it.zuppa.chuff.valueObject.StationType;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
@@ -227,19 +227,16 @@ public class StationServiceImplTest {
   }
 
   @Test
-  public void itShouldReturnStationResponseWhenIdIsCorrectAndStationExists() {
+  public void itShouldReturnStationWhenIdIsCorrectAndStationExists() {
     UUID id = UUID.randomUUID();
     Station station = Station.builder().name(name).code(code).stationType(stationType).build();
     station.setId(id);
-    StationResponse response =
-        StationResponse.builder().id(id).name(name).code(code).type(stationType).build();
     Mockito.when(repository.findById(id)).thenReturn(Optional.of(station));
-    Mockito.when(mapper.stationToStationResponse(station)).thenReturn(response);
-    StationResponse result = service.getStation(id);
-    assertEquals(response.id(), result.id());
-    assertEquals(response.name(), result.name());
-    assertEquals(response.code(), result.code());
-    assertEquals(response.type(), result.type());
+    Station result = service.getStation(id);
+    assertEquals(station.getId(), result.getId());
+    assertEquals(station.getName(), result.getName());
+    assertEquals(station.getCode(), result.getCode());
+    assertEquals(station.getStationType(), result.getStationType());
   }
 
   @Test

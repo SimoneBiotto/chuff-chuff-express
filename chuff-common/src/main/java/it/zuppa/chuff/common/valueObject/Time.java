@@ -44,4 +44,8 @@ public class Time {
   public void setTime(LocalTime time) {
     this.time = time;
   }
+
+  public boolean isAfter(Time other) {
+    return this.getTime().isAfter(other.getTime());
+  }
 }

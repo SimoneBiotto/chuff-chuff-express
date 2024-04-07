@@ -1,6 +1,8 @@
 dependencies {
     implementation project(":chuff-common")
     implementation project(":chuff-domain")
+    implementation project(":chuff-station-service")
+    implementation project(":chuff-schedule-service")
     implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
     implementation "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"

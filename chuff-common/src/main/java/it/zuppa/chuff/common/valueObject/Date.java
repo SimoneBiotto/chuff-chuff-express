@@ -39,4 +39,8 @@ public class Date {
   public void setDate(LocalDate date) {
     this.date = date;
   }
+
+  public boolean isAfter(Date other) {
+    return this.getDate().isAfter(other.getDate());
+  }
 }

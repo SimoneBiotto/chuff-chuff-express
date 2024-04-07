@@ -1,5 +1,6 @@
 package it.zuppa.chuff.stationService.ports.input.service;
 
+import it.zuppa.chuff.domain.station.Station;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.stationService.dto.station.*;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ public interface StationService {
 
   void deleteStation(UUID id) throws DomainException, InvalidParameterException;
 
-  StationResponse getStation(UUID id);
+  Station getStation(UUID id);
 
   Optional<StationCompactResponse> searchStationBySearchStationRequest(
       @Valid SearchStationRequest searchStationRequest) throws InvalidParameterException;

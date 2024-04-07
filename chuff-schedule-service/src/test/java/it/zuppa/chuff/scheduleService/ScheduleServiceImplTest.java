@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import it.zuppa.chuff.domain.schedule.Schedule;
-import it.zuppa.chuff.valueObject.ScheduleType;
 import it.zuppa.chuff.exception.DomainException;
 import it.zuppa.chuff.scheduleService.dto.schedule.CreateScheduleRequest;
 import it.zuppa.chuff.scheduleService.dto.schedule.ScheduleResponse;
 import it.zuppa.chuff.scheduleService.mapper.ScheduleDataMapper;
 import it.zuppa.chuff.scheduleService.ports.output.repositoty.ScheduleRepository;
+import it.zuppa.chuff.valueObject.ScheduleType;
 import java.security.InvalidParameterException;
 import java.time.DayOfWeek;
 import java.util.Optional;

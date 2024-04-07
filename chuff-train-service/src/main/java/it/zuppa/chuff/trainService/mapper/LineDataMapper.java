@@ -2,8 +2,8 @@ package it.zuppa.chuff.trainService.mapper;
 
 import it.zuppa.chuff.domain.train.Line;
 import it.zuppa.chuff.trainService.dto.line.CreateLineRequest;
-import it.zuppa.chuff.trainService.dto.line.EditLineRequest;
 import it.zuppa.chuff.trainService.dto.line.LineResponse;
+import it.zuppa.chuff.trainService.dto.line.UpdateLineRequest;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,9 +12,10 @@ public class LineDataMapper {
     return Line.builder().code(createLineRequest.code()).type(createLineRequest.type()).build();
   }
 
-  public Line editLineRequestToLine(EditLineRequest editLineRequest) {
-    Line line = Line.builder().code(editLineRequest.code()).type(editLineRequest.type()).build();
-    line.setId(editLineRequest.id());
+  public Line updateLineRequestToLine(UpdateLineRequest updateLineRequest) {
+    Line line =
+        Line.builder().code(updateLineRequest.code()).type(updateLineRequest.type()).build();
+    line.setId(updateLineRequest.id());
     return line;
   }
 

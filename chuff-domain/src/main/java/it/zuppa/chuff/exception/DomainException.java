@@ -24,7 +24,8 @@ public class DomainException extends ChuffChuffException {
     DUPLICATE_RESOURCE("Resource Duplicated"),
     RESOURCE_NOT_FOUND("Resource Not Found"),
     ERROR_DURING_SAVING("Error During Saving"),
-    GENERIC_ERROR("Generic Error");
+    GENERIC_ERROR("Generic Error"),
+    DOMAIN_CONSTRAINT_VIOLATION("Domain Constraint Violation");
 
     public final String message;
 

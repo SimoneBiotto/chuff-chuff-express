@@ -6,5 +6,5 @@ import java.util.UUID;
 import lombok.Builder;
 
 @Builder
-public record EditLineRequest(
+public record UpdateLineRequest(
     @NotNull UUID id, @NotNull @NotBlank String type, @NotNull @NotBlank String code) {}

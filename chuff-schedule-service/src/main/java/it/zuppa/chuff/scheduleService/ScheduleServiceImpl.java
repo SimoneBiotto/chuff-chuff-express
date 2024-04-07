@@ -88,4 +88,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     log.info("Schedule updated successfully with id {}", id);
     return mapper.scheduleToScheduleResponse(updatedSchedule);
   }
+
+  @Override
+  public Schedule getSchedule(UUID id) {
+    if (id == null) return null;
+    return repository.findById(id).orElse(null);
+  }
 }
