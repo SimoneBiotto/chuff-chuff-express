@@ -4,11 +4,22 @@ import it.zuppa.chuff.domain.train.Train;
 import it.zuppa.chuff.stationService.mapper.StationDataMapper;
 import it.zuppa.chuff.trainService.dto.train.TrainCompactResponse;
 import it.zuppa.chuff.trainService.dto.train.TrainResponse;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TrainDataMapper {
-  LineDataMapper lineDataMapper;
-  StationDataMapper stationDataMapper;
-  TrainStopDataMapper trainStopDataMapper;
+  private final LineDataMapper lineDataMapper;
+  private final StationDataMapper stationDataMapper;
+  private final TrainStopDataMapper trainStopDataMapper;
+
+  public TrainDataMapper(
+      LineDataMapper lineDataMapper,
+      StationDataMapper stationDataMapper,
+      TrainStopDataMapper trainStopDataMapper) {
+    this.lineDataMapper = lineDataMapper;
+    this.stationDataMapper = stationDataMapper;
+    this.trainStopDataMapper = trainStopDataMapper;
+  }
 
   public TrainCompactResponse trainToTrainCompactResponse(Train train) {
     return TrainCompactResponse.builder()

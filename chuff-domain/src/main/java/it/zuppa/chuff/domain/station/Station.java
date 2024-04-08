@@ -17,8 +17,8 @@ import lombok.*;
 @NoArgsConstructor
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"code"})})
 public class Station extends BaseEntity {
-  private String code;
-  private String name;
+  @NonNull private String code;
+  @NonNull private String name;
   @Builder.Default private boolean enabled = true;
 
   @Enumerated(EnumType.STRING)
