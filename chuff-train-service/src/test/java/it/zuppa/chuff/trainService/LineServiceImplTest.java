@@ -11,7 +11,6 @@ import it.zuppa.chuff.trainService.mapper.LineDataMapper;
 import it.zuppa.chuff.trainService.ports.output.repository.LineRepository;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

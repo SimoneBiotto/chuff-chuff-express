@@ -18,7 +18,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrainStop extends BaseEntity {
-  @NonNull @ManyToOne private Train train;
+  @ManyToOne private Train train;
   @NonNull @ManyToOne private Station station;
   @NonNull @Embedded private Time arrivalTime;
   @NonNull @Embedded private Time departureTime;
@@ -28,6 +28,8 @@ public class TrainStop extends BaseEntity {
     if (station == null) errorMessage.add("station is required");
     if (arrivalTime == null) errorMessage.add("arrivalTime is required");
     if (departureTime == null) errorMessage.add("departureTime is required");
+    if (arrivalTime != null && departureTime != null && arrivalTime.isAfter(departureTime))
+      errorMessage.add("arrivalTime must be before departureTime");
     return errorMessage;
   }
 
