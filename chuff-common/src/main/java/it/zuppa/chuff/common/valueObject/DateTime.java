@@ -65,7 +65,7 @@ public class DateTime {
   }
 
   public Date getDate() {
-      return new Date(zonedDateTime.toLocalDate());
+    return new Date(zonedDateTime.toLocalDate());
   }
 
   public boolean isAfter(DateTime other) {
@@ -80,27 +80,27 @@ public class DateTime {
     return new DateTime(zonedDateTime.plusHours(hours));
   }
 
-    public DateTime plusMinutes(long minutes) {
-        return new DateTime(zonedDateTime.plusMinutes(minutes));
-    }
+  public DateTime plusMinutes(long minutes) {
+    return new DateTime(zonedDateTime.plusMinutes(minutes));
+  }
 
-    public DateTime plusSeconds(long seconds) {
-        return new DateTime(zonedDateTime.plusSeconds(seconds));
-    }
+  public DateTime plusSeconds(long seconds) {
+    return new DateTime(zonedDateTime.plusSeconds(seconds));
+  }
 
-    public DateTime minusDays(long days) {
-        return new DateTime(zonedDateTime.minusDays(days));
-    }
+  public DateTime minusDays(long days) {
+    return new DateTime(zonedDateTime.minusDays(days));
+  }
 
-    public DateTime minusHours(long hours) {
-        return new DateTime(zonedDateTime.minusHours(hours));
-    }
+  public DateTime minusHours(long hours) {
+    return new DateTime(zonedDateTime.minusHours(hours));
+  }
 
-    public DateTime minusMinutes(long minutes) {
-        return new DateTime(zonedDateTime.minusMinutes(minutes));
-    }
+  public DateTime minusMinutes(long minutes) {
+    return new DateTime(zonedDateTime.minusMinutes(minutes));
+  }
 
-    public DateTime minusSeconds(long seconds) {
-        return new DateTime(zonedDateTime.minusSeconds(seconds));
-    }
+  public DateTime minusSeconds(long seconds) {
+    return new DateTime(zonedDateTime.minusSeconds(seconds));
+  }
 }

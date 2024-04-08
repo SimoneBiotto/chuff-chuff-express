@@ -8,7 +8,6 @@ import it.zuppa.chuff.common.valueObject.DateTime;
 import it.zuppa.chuff.common.valueObject.Time;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-
 import org.junit.jupiter.api.Test;
 
 public class DateTimeTest {
@@ -61,36 +60,35 @@ public class DateTimeTest {
     assertEquals(zonedDateTime.minusHours(1), dateTimeBefore.getZonedDateTime());
   }
 
-    @Test
-    public void itShouldReturnDateTimePlusMinutes() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        DateTime dateTime = new DateTime(zonedDateTime);
-        DateTime dateTimeAfter = dateTime.plusMinutes(1);
-        assertEquals(zonedDateTime.plusMinutes(1), dateTimeAfter.getZonedDateTime());
-    }
+  @Test
+  public void itShouldReturnDateTimePlusMinutes() {
+    ZonedDateTime zonedDateTime = ZonedDateTime.now();
+    DateTime dateTime = new DateTime(zonedDateTime);
+    DateTime dateTimeAfter = dateTime.plusMinutes(1);
+    assertEquals(zonedDateTime.plusMinutes(1), dateTimeAfter.getZonedDateTime());
+  }
 
-    @Test
-    public void itShouldReturnDateTimeMinusMinutes() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        DateTime dateTime = new DateTime(zonedDateTime);
-        DateTime dateTimeBefore = dateTime.minusMinutes(1);
-        assertEquals(zonedDateTime.minusMinutes(1), dateTimeBefore.getZonedDateTime());
-    }
+  @Test
+  public void itShouldReturnDateTimeMinusMinutes() {
+    ZonedDateTime zonedDateTime = ZonedDateTime.now();
+    DateTime dateTime = new DateTime(zonedDateTime);
+    DateTime dateTimeBefore = dateTime.minusMinutes(1);
+    assertEquals(zonedDateTime.minusMinutes(1), dateTimeBefore.getZonedDateTime());
+  }
 
-    @Test
-    public void itShouldReturnDateTimePlusSeconds() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        DateTime dateTime = new DateTime(zonedDateTime);
-        DateTime dateTimeAfter = dateTime.plusSeconds(1);
-        assertEquals(zonedDateTime.plusSeconds(1), dateTimeAfter.getZonedDateTime());
-    }
+  @Test
+  public void itShouldReturnDateTimePlusSeconds() {
+    ZonedDateTime zonedDateTime = ZonedDateTime.now();
+    DateTime dateTime = new DateTime(zonedDateTime);
+    DateTime dateTimeAfter = dateTime.plusSeconds(1);
+    assertEquals(zonedDateTime.plusSeconds(1), dateTimeAfter.getZonedDateTime());
+  }
 
-    @Test
-    public void itShouldReturnDateTimeMinusSeconds() {
-        ZonedDateTime zonedDateTime = ZonedDateTime.now();
-        DateTime dateTime = new DateTime(zonedDateTime);
-        DateTime dateTimeBefore = dateTime.minusSeconds(1);
-        assertEquals(zonedDateTime.minusSeconds(1), dateTimeBefore.getZonedDateTime());
-    }
-
+  @Test
+  public void itShouldReturnDateTimeMinusSeconds() {
+    ZonedDateTime zonedDateTime = ZonedDateTime.now();
+    DateTime dateTime = new DateTime(zonedDateTime);
+    DateTime dateTimeBefore = dateTime.minusSeconds(1);
+    assertEquals(zonedDateTime.minusSeconds(1), dateTimeBefore.getZonedDateTime());
+  }
 }

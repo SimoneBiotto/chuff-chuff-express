@@ -53,23 +53,23 @@ public class Time {
     return new Time(time.plusHours(hours));
   }
 
-public Time minusHours(long hours) {
+  public Time minusHours(long hours) {
     return new Time(time.minusHours(hours));
   }
 
-    public Time plusMinutes(long minutes) {
-        return new Time(time.plusMinutes(minutes));
-    }
+  public Time plusMinutes(long minutes) {
+    return new Time(time.plusMinutes(minutes));
+  }
 
-    public Time minusMinutes(long minutes) {
-        return new Time(time.minusMinutes(minutes));
-    }
+  public Time minusMinutes(long minutes) {
+    return new Time(time.minusMinutes(minutes));
+  }
 
-    public Time plusSeconds(long seconds) {
-        return new Time(time.plusSeconds(seconds));
-    }
+  public Time plusSeconds(long seconds) {
+    return new Time(time.plusSeconds(seconds));
+  }
 
-    public Time minusSeconds(long seconds) {
-        return new Time(time.minusSeconds(seconds));
-    }
+  public Time minusSeconds(long seconds) {
+    return new Time(time.minusSeconds(seconds));
+  }
 }

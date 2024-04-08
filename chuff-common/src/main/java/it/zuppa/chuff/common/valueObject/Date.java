@@ -47,8 +47,8 @@ public class Date {
   public Date plusDays(long days) {
     return new Date(date.plusDays(days));
   }
+
   public Date minusDays(long days) {
     return new Date(date.minusDays(days));
   }
-
 }
