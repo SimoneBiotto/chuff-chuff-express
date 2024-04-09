@@ -66,17 +66,16 @@ public class ScheduleServiceImplTest {
     Mockito.when(repository.createSchedule(schedule)).thenReturn(schedule);
     Mockito.when(mapper.createScheduleRequestoToSchedule(createScheduleRequest))
         .thenReturn(schedule);
-    Mockito.when(mapper.scheduleToScheduleResponse(schedule)).thenReturn(scheduleResponse);
-    ScheduleResponse response = service.createSchedule(createScheduleRequest);
+    Schedule response = service.createSchedule(createScheduleRequest);
     Mockito.verify(mapper, Mockito.times(1))
         .createScheduleRequestoToSchedule(createScheduleRequest);
-    assertEquals(scheduleResponse.id(), response.id());
-    assertEquals(scheduleResponse.type(), response.type());
+    assertEquals(scheduleResponse.id(), response.getId());
+    assertEquals(scheduleResponse.type(), response.getType());
     assertEquals(
         scheduleResponse.priceIncreasedPercentageOnFestive(),
-        response.priceIncreasedPercentageOnFestive());
-    assertEquals(scheduleResponse.weekDay(), response.weekDay());
-    assertEquals(scheduleResponse.enabled(), response.enabled());
+        response.getPriceIncreasedPercentageOnFestive());
+    assertEquals(scheduleResponse.weekDay(), response.getWeekDay());
+    assertEquals(scheduleResponse.enabled(), response.isEnabled());
   }
 
   @Test
@@ -145,16 +144,15 @@ public class ScheduleServiceImplTest {
             .weekDay(schedule.getWeekDay())
             .enabled(schedule.isEnabled())
             .build();
-    Mockito.when(mapper.scheduleToScheduleResponse(schedule)).thenReturn(scheduleResponse);
-    ScheduleResponse response = service.toggleEnabledStatusSchedule(id, !schedule.isEnabled());
+    Schedule response = service.toggleEnabledStatusSchedule(id, !schedule.isEnabled());
     Mockito.verify(repository, Mockito.times(1)).updateSchedule(schedule);
-    assertEquals(scheduleResponse.id(), response.id());
-    assertEquals(scheduleResponse.type(), response.type());
+    assertEquals(scheduleResponse.id(), response.getId());
+    assertEquals(scheduleResponse.type(), response.getType());
     assertEquals(
         scheduleResponse.priceIncreasedPercentageOnFestive(),
-        response.priceIncreasedPercentageOnFestive());
-    assertEquals(scheduleResponse.weekDay(), response.weekDay());
-    assertEquals(scheduleResponse.enabled(), response.enabled());
+        response.getPriceIncreasedPercentageOnFestive());
+    assertEquals(scheduleResponse.weekDay(), response.getWeekDay());
+    assertEquals(scheduleResponse.enabled(), !response.isEnabled());
   }
 
   @Test
@@ -182,14 +180,13 @@ public class ScheduleServiceImplTest {
             .weekDay(schedule.getWeekDay())
             .enabled(schedule.isEnabled())
             .build();
-    Mockito.when(mapper.scheduleToScheduleResponse(schedule)).thenReturn(scheduleResponse);
-    ScheduleResponse response = service.toggleEnabledStatusSchedule(id, schedule.isEnabled());
-    assertEquals(scheduleResponse.id(), response.id());
-    assertEquals(scheduleResponse.type(), response.type());
+    Schedule response = service.toggleEnabledStatusSchedule(id, schedule.isEnabled());
+    assertEquals(scheduleResponse.id(), response.getId());
+    assertEquals(scheduleResponse.type(), response.getType());
     assertEquals(
         scheduleResponse.priceIncreasedPercentageOnFestive(),
-        response.priceIncreasedPercentageOnFestive());
-    assertEquals(scheduleResponse.weekDay(), response.weekDay());
-    assertEquals(scheduleResponse.enabled(), response.enabled());
+        response.getPriceIncreasedPercentageOnFestive());
+    assertEquals(scheduleResponse.weekDay(), response.getWeekDay());
+    assertEquals(scheduleResponse.enabled(), response.isEnabled());
   }
 }

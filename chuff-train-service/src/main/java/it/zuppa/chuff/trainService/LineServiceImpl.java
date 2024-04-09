@@ -8,6 +8,8 @@ import it.zuppa.chuff.trainService.dto.line.UpdateLineRequest;
 import it.zuppa.chuff.trainService.mapper.LineDataMapper;
 import it.zuppa.chuff.trainService.ports.input.service.LineService;
 import it.zuppa.chuff.trainService.ports.output.repository.LineRepository;
+
+import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class LineServiceImpl implements LineService {
   }
 
   @Override
-  public LineResponse createLine(CreateLineRequest createLineRequest) throws DomainException {
+  public Line createLine(CreateLineRequest createLineRequest) throws DomainException {
     if (repository
         .findByTypeAndCode(createLineRequest.type(), createLineRequest.code())
         .isPresent()) {
@@ -50,7 +52,7 @@ public class LineServiceImpl implements LineService {
       throw new DomainException(message, DomainException.Reason.ERROR_DURING_SAVING, Line.class);
     }
     log.info("Line created successfully with id {}", line.getId());
-    return mapper.lineToLineResponse(line);
+    return line;
   }
 
   @Override
@@ -67,7 +69,7 @@ public class LineServiceImpl implements LineService {
   }
 
   @Override
-  public LineResponse editLine(UpdateLineRequest updateLineRequest) throws DomainException {
+  public Line editLine(UpdateLineRequest updateLineRequest) throws DomainException {
     Line line =
         repository
             .findById(updateLineRequest.id())
@@ -90,12 +92,12 @@ public class LineServiceImpl implements LineService {
                         DomainException.Reason.ERROR_DURING_SAVING,
                         Line.class));
     log.info("Line updated successfully with id {}", updatedLine.getId());
-    return mapper.lineToLineResponse(updatedLine);
+    return updatedLine;
   }
 
   @Override
-  public Line getLine(UUID id) {
-    if (id == null) return null;
-    return repository.findById(id).orElse(null);
+  public Optional<Line> getLine(UUID id) {
+    if (id == null) return Optional.empty();
+    return repository.findById(id);
   }
 }

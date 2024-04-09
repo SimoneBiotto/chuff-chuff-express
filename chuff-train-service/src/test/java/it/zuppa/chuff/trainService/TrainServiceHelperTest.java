@@ -20,6 +20,7 @@ import it.zuppa.chuff.trainService.ports.input.service.LineService;
 import it.zuppa.chuff.valueObject.TrainSchedule;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -84,10 +85,10 @@ public class TrainServiceHelperTest {
             .endTime(endTime)
             .repetition(repetition)
             .build();
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
-    Mockito.when(lineService.getLine(line.getId())).thenReturn(line);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(schedule);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
+    Mockito.when(lineService.getLine(line.getId())).thenReturn(Optional.of(line));
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.of(schedule));
     Mockito.doReturn(trainStop)
         .when(serviceHelper)
         .createTrainStopEntity(createTrainRequest.trainStopRequestList().get(0));
@@ -125,10 +126,10 @@ public class TrainServiceHelperTest {
                         .stationId(UUID.randomUUID())
                         .build()))
             .build();
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
-    Mockito.when(lineService.getLine(line.getId())).thenReturn(line);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(schedule);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
+    Mockito.when(lineService.getLine(line.getId())).thenReturn(Optional.of(line));
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.of(schedule));
     Mockito.doThrow(
             new DomainException(
                 "Error creating train stop entity",
@@ -159,10 +160,10 @@ public class TrainServiceHelperTest {
             .repetition(new Time())
             .trainStopRequestList(List.of())
             .build();
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
-    Mockito.when(lineService.getLine(line.getId())).thenReturn(line);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(schedule);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
+    Mockito.when(lineService.getLine(line.getId())).thenReturn(Optional.of(line));
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.of(schedule));
     DomainException thrown =
         assertThrows(
             DomainException.class,
@@ -192,10 +193,10 @@ public class TrainServiceHelperTest {
                         .stationId(UUID.randomUUID())
                         .build()))
             .build();
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(null);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
-    Mockito.when(lineService.getLine(line.getId())).thenReturn(line);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(schedule);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.empty());
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
+    Mockito.when(lineService.getLine(line.getId())).thenReturn(Optional.of(line));
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.of(schedule));
     DomainException thrown =
         assertThrows(
             DomainException.class,
@@ -225,10 +226,10 @@ public class TrainServiceHelperTest {
                         .stationId(UUID.randomUUID())
                         .build()))
             .build();
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
-    Mockito.when(lineService.getLine(line.getId())).thenReturn(line);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(null);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
+    Mockito.when(lineService.getLine(line.getId())).thenReturn(Optional.of(line));
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.empty());
     DomainException thrown =
         assertThrows(
             DomainException.class,
@@ -258,10 +259,10 @@ public class TrainServiceHelperTest {
                         .stationId(UUID.randomUUID())
                         .build()))
             .build();
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
-    Mockito.when(lineService.getLine(line.getId())).thenReturn(line);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(schedule);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
+    Mockito.when(lineService.getLine(line.getId())).thenReturn(Optional.of(line));
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.of(schedule));
     Mockito.doThrow(
             new DomainException(
                 "Error creating train schedule",
@@ -304,7 +305,7 @@ public class TrainServiceHelperTest {
     Mockito.doReturn(trainSchedule)
         .when(serviceHelper)
         .createTrainSchedule(startTime, endTime, repetition, null, null);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(schedule);
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.of(schedule));
     serviceHelper.updateTrainSchedule(updateTrainScheduleRequest, train);
     assertEquals(startTime, train.getTrainSchedule().getStartTime());
     assertEquals(endTime, train.getTrainSchedule().getEndTime());
@@ -354,7 +355,7 @@ public class TrainServiceHelperTest {
     Mockito.doReturn(new TrainSchedule())
         .when(serviceHelper)
         .createTrainSchedule(startTime, endTime, repetition, null, null);
-    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(null);
+    Mockito.when(scheduleService.getSchedule(schedule.getId())).thenReturn(Optional.empty());
     DomainException thrown =
         assertThrows(
             DomainException.class,
@@ -382,8 +383,8 @@ public class TrainServiceHelperTest {
                         .build()))
             .build();
 
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
     Mockito.doReturn(trainStop)
         .when(serviceHelper)
         .createTrainStopEntity(updateTrainStationsRequest.trainStopRequestList().get(0));
@@ -410,8 +411,8 @@ public class TrainServiceHelperTest {
                         .build()))
             .build();
 
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
     Mockito.doThrow(
             new DomainException(
                 "Error creating train stop entity",
@@ -446,8 +447,8 @@ public class TrainServiceHelperTest {
                         .build()))
             .build();
 
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(null);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(arrivalStation);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.empty());
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.of(arrivalStation));
     DomainException thrown =
         assertThrows(
             DomainException.class,
@@ -475,8 +476,8 @@ public class TrainServiceHelperTest {
                         .build()))
             .build();
 
-    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(departureStation);
-    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(null);
+    Mockito.when(stationService.getStation(departureStation.getId())).thenReturn(Optional.of(departureStation));
+    Mockito.when(stationService.getStation(arrivalStation.getId())).thenReturn(Optional.empty());
     DomainException thrown =
         assertThrows(
             DomainException.class,
@@ -496,7 +497,7 @@ public class TrainServiceHelperTest {
             .departureTime(endTime)
             .build();
     Mockito.when(stationService.getStation(createTrainStopRequest.stationId()))
-        .thenReturn(departureStation);
+        .thenReturn(Optional.of(departureStation));
     TrainStop trainStop = serviceHelper.createTrainStopEntity(createTrainStopRequest);
     assertEquals(departureStation.getId(), trainStop.getStation().getId());
     assertEquals(startTime, trainStop.getArrivalTime());
@@ -511,7 +512,7 @@ public class TrainServiceHelperTest {
             .arrivalTime(startTime)
             .departureTime(endTime)
             .build();
-    Mockito.when(stationService.getStation(createTrainStopRequest.stationId())).thenReturn(null);
+    Mockito.when(stationService.getStation(createTrainStopRequest.stationId())).thenReturn(Optional.empty());
     DomainException thrown =
         assertThrows(
             DomainException.class,

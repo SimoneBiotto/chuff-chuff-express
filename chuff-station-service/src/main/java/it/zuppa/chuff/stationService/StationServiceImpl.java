@@ -25,7 +25,7 @@ public class StationServiceImpl implements StationService {
   }
 
   @Override
-  public StationCompactResponse createStation(CreateStationRequest createStationRequest)
+  public Station createStation(CreateStationRequest createStationRequest)
       throws DomainException {
     if (repository.findByCode(createStationRequest.code()).isPresent()) {
       throw new DomainException(
@@ -46,11 +46,11 @@ public class StationServiceImpl implements StationService {
       throw new DomainException(message, DomainException.Reason.ERROR_DURING_SAVING, Station.class);
     }
     log.info("Station created successfully with id {}", station.getId());
-    return mapper.stationToStationCompactResponse(station);
+    return station;
   }
 
   @Override
-  public StationCompactResponse editStation(EditStationRequest editStationRequest)
+  public Station editStation(EditStationRequest editStationRequest)
       throws DomainException {
     Station station =
         repository
@@ -76,7 +76,7 @@ public class StationServiceImpl implements StationService {
                         DomainException.Reason.ERROR_DURING_SAVING,
                         Station.class));
     log.info("Station edited successfully with id {}", updatedStation.getId());
-    return mapper.stationToStationCompactResponse(updatedStation);
+    return updatedStation;
   }
 
   @Override
@@ -99,13 +99,13 @@ public class StationServiceImpl implements StationService {
   }
 
   @Override
-  public Station getStation(UUID id) {
-    if (id == null) return null;
-    return repository.findById(id).orElse(null);
+  public Optional<Station> getStation(UUID id) {
+    if (id == null) return Optional.empty();
+    return repository.findById(id);
   }
 
   @Override
-  public Optional<StationCompactResponse> searchStationBySearchStationRequest(
+  public Optional<Station> searchStationBySearchStationRequest(
       SearchStationRequest searchStationRequest) throws InvalidParameterException {
     log.info("Searching station: {}", searchStationRequest);
     Optional<Station> station;
@@ -117,20 +117,18 @@ public class StationServiceImpl implements StationService {
       log.error("Invalid search request");
       throw new InvalidParameterException("Invalid search request");
     }
-    return station.map(mapper::stationToStationCompactResponse);
+    return station;
   }
 
   @Override
-  public List<StationCompactResponse> searchAllStationSearchStationRequest(
+  public List<Station> searchAllStationSearchStationRequest(
       SearchStationRequest searchStationRequest) {
     log.info("Searching all stations: {}", searchStationRequest);
-    List<Station> stations =
-        repository.findAll(mapper.searchStationRequestToSearchStationDto(searchStationRequest));
-    return stations.stream().map(mapper::stationToStationCompactResponse).toList();
+      return repository.findAll(mapper.searchStationRequestToSearchStationDto(searchStationRequest));
   }
 
   @Override
-  public StationCompactResponse toggleStationStatus(UUID id, boolean enable)
+  public Station toggleStationStatus(UUID id, boolean enable)
       throws DomainException {
     Station station =
         repository
@@ -144,7 +142,7 @@ public class StationServiceImpl implements StationService {
     log.info("Toggling station status to {} (id: {})", enable, id);
     if (enable == station.isEnabled()) {
       log.info("Station already in requested status {} (id: {})", enable, id);
-      return mapper.stationToStationCompactResponse(station);
+      return station;
     }
     station.setEnabled(enable);
     Station updatedStation =
@@ -157,6 +155,6 @@ public class StationServiceImpl implements StationService {
                         DomainException.Reason.ERROR_DURING_SAVING,
                         Station.class));
     log.info("Station status toggled successfully (id: {})", updatedStation.getId());
-    return mapper.stationToStationCompactResponse(updatedStation);
+    return updatedStation;
   }
 }

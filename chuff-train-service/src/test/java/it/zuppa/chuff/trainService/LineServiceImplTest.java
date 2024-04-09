@@ -48,12 +48,11 @@ public class LineServiceImplTest {
     Mockito.when(repository.findByTypeAndCode(type, code)).thenReturn(Optional.empty());
     Mockito.when(repository.createLine(line)).thenReturn(line);
     Mockito.when(lineDataMapper.createLineRequestToLine(request)).thenReturn(line);
-    Mockito.when(lineDataMapper.lineToLineResponse(line)).thenReturn(response);
-    LineResponse result = lineService.createLine(request);
+    Line result = lineService.createLine(request);
     assertNotNull(result);
-    assertEquals(response.id(), result.id());
-    assertEquals(response.type(), result.type());
-    assertEquals(response.code(), result.code());
+    assertEquals(response.id(), result.getId());
+    assertEquals(response.type(), result.getType());
+    assertEquals(response.code(), result.getCode());
   }
 
   @Test
@@ -130,17 +129,16 @@ public class LineServiceImplTest {
     Mockito.when(repository.findById(request.id())).thenReturn(Optional.of(line));
     ArgumentCaptor<Line> lineArgumentCaptor = ArgumentCaptor.forClass(Line.class);
     Mockito.when(repository.updateLine(line)).thenReturn(Optional.of(lineChanged));
-    Mockito.when(lineDataMapper.lineToLineResponse(Mockito.eq(lineChanged))).thenReturn(response);
 
-    LineResponse lineResponse = lineService.editLine(request);
+    Line lineResponse = lineService.editLine(request);
 
     Mockito.verify(repository, Mockito.times(1)).updateLine(line);
     Mockito.verify(repository).updateLine(lineArgumentCaptor.capture());
     assertEquals(lineArgumentCaptor.getValue().getType(), request.type());
     assertEquals(lineArgumentCaptor.getValue().getCode(), request.code());
-    assertEquals(lineResponse.id(), response.id());
-    assertEquals(lineResponse.type(), response.type());
-    assertEquals(lineResponse.code(), response.code());
+    assertEquals(lineResponse.getId(), response.id());
+    assertEquals(lineResponse.getType(), response.type());
+    assertEquals(lineResponse.getCode(), response.code());
   }
 
   @Test

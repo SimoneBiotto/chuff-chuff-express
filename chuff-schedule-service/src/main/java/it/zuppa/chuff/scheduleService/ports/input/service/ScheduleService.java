@@ -7,15 +7,16 @@ import it.zuppa.chuff.scheduleService.dto.schedule.ScheduleResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.security.InvalidParameterException;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ScheduleService {
-  ScheduleResponse createSchedule(@Valid CreateScheduleRequest createScheduleRequest)
+  Schedule createSchedule(@Valid CreateScheduleRequest createScheduleRequest)
       throws DomainException;
 
   void deleteSchedule(UUID id) throws DomainException, InvalidParameterException;
 
-  ScheduleResponse toggleEnabledStatusSchedule(UUID id, boolean enabled) throws DomainException;
+  Schedule toggleEnabledStatusSchedule(UUID id, boolean enabled) throws DomainException;
 
-  Schedule getSchedule(@NotNull UUID id);
+  Optional<Schedule> getSchedule(@NotNull UUID id);
 }

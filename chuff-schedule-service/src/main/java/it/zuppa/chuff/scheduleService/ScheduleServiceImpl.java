@@ -8,6 +8,7 @@ import it.zuppa.chuff.scheduleService.mapper.ScheduleDataMapper;
 import it.zuppa.chuff.scheduleService.ports.input.service.ScheduleService;
 import it.zuppa.chuff.scheduleService.ports.output.repositoty.ScheduleRepository;
 import java.security.InvalidParameterException;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   @Override
-  public ScheduleResponse createSchedule(CreateScheduleRequest createScheduleRequest)
+  public Schedule createSchedule(CreateScheduleRequest createScheduleRequest)
       throws DomainException {
     log.info("Creating schedule: " + createScheduleRequest.toString());
     Schedule schedule =
@@ -36,7 +37,7 @@ public class ScheduleServiceImpl implements ScheduleService {
           message, DomainException.Reason.ERROR_DURING_SAVING, Schedule.class);
     }
     log.info("Schedule created successfully with id {}", schedule.getId());
-    return mapper.scheduleToScheduleResponse(schedule);
+    return schedule;
   }
 
   @Override
@@ -59,7 +60,7 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   @Override
-  public ScheduleResponse toggleEnabledStatusSchedule(UUID id, boolean enabled)
+  public Schedule toggleEnabledStatusSchedule(UUID id, boolean enabled)
       throws DomainException {
     Schedule schedule =
         repository
@@ -73,7 +74,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     log.info("Toggling enabled status of schedule with id {} to {}", id, enabled);
     if (schedule.isEnabled() == enabled) {
       log.info("Schedule already has the desired status");
-      return mapper.scheduleToScheduleResponse(schedule);
+      return schedule;
     }
     schedule.setEnabled(enabled);
     Schedule updatedSchedule =
@@ -86,12 +87,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                         DomainException.Reason.ERROR_DURING_SAVING,
                         Schedule.class));
     log.info("Schedule updated successfully with id {}", id);
-    return mapper.scheduleToScheduleResponse(updatedSchedule);
+    return updatedSchedule;
   }
 
   @Override
-  public Schedule getSchedule(UUID id) {
-    if (id == null) return null;
-    return repository.findById(id).orElse(null);
+  public Optional<Schedule> getSchedule(UUID id) {
+    if (id == null) return Optional.empty();
+    return repository.findById(id);
   }
 }

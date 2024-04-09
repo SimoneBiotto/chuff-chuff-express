@@ -38,10 +38,10 @@ public class TrainServiceHelper {
   public Train createTrainEntity(CreateTrainRequest createTrainRequest) throws DomainException {
     List<String> messageError = new ArrayList<>();
 
-    Station departureStation = stationService.getStation(createTrainRequest.departureStationId());
-    Station arrivalStation = stationService.getStation(createTrainRequest.arrivalStationId());
-    Line line = lineService.getLine(createTrainRequest.lineId());
-    Schedule schedule = scheduleService.getSchedule(createTrainRequest.scheduleId());
+    Station departureStation = stationService.getStation(createTrainRequest.departureStationId()).orElse(null);
+    Station arrivalStation = stationService.getStation(createTrainRequest.arrivalStationId()).orElse(null);
+    Line line = lineService.getLine(createTrainRequest.lineId()).orElse(null);
+    Schedule schedule = scheduleService.getSchedule(createTrainRequest.scheduleId()).orElse(null);
     if (createTrainRequest.scheduleId() != null && schedule == null)
       messageError.add("Schedule with id " + createTrainRequest.scheduleId() + " not found");
 
@@ -89,7 +89,7 @@ public class TrainServiceHelper {
 
   protected TrainStop createTrainStopEntity(CreateTrainStopRequest createTrainStopRequest)
       throws DomainException {
-    Station station = stationService.getStation(createTrainStopRequest.stationId());
+    Station station = stationService.getStation(createTrainStopRequest.stationId()).orElse(null);
     List<String> messageError =
         TrainStop.validate(
             station, createTrainStopRequest.arrivalTime(), createTrainStopRequest.departureTime());
@@ -98,11 +98,12 @@ public class TrainServiceHelper {
           "Error creating train stop entity, cause: " + String.join(", ", messageError),
           DomainException.Reason.DOMAIN_CONSTRAINT_VIOLATION,
           TrainStop.class);
+    assert station != null;
     return TrainStop.builder()
-        .station(station)
-        .arrivalTime(createTrainStopRequest.arrivalTime())
-        .departureTime(createTrainStopRequest.departureTime())
-        .build();
+      .station(station)
+      .arrivalTime(createTrainStopRequest.arrivalTime())
+      .departureTime(createTrainStopRequest.departureTime())
+      .build();
   }
 
   protected TrainSchedule createTrainSchedule(
@@ -133,7 +134,7 @@ public class TrainServiceHelper {
     } catch (DomainException domainException) {
       errorMessage.add(domainException.getMessage());
     }
-    Schedule schedule = scheduleService.getSchedule(updateTrainScheduleRequest.scheduleId());
+    Schedule schedule = scheduleService.getSchedule(updateTrainScheduleRequest.scheduleId()).orElse(null);
     if (updateTrainScheduleRequest.scheduleId() != null && schedule == null)
       errorMessage.add(
           "Schedule with id " + updateTrainScheduleRequest.scheduleId() + " not found");
@@ -165,10 +166,10 @@ public class TrainServiceHelper {
               }
             });
     Station departureStation =
-        stationService.getStation(updateTrainStationsRequest.departureStationId());
+        stationService.getStation(updateTrainStationsRequest.departureStationId()).orElse(null);
     if (departureStation == null) errorMessage.add("departureStation is required");
     Station arrivalStation =
-        stationService.getStation(updateTrainStationsRequest.arrivalStationId());
+        stationService.getStation(updateTrainStationsRequest.arrivalStationId()).orElse(null);
     if (arrivalStation == null) errorMessage.add("arrivalStation is required");
     if (!errorMessage.isEmpty())
       throw new DomainException(

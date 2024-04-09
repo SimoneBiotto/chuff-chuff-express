@@ -59,12 +59,12 @@ public class StationServiceImplTest {
     Mockito.when(repository.createStation(station)).thenReturn(station);
     Mockito.when(mapper.createStationRequestToStation(createStationRequest)).thenReturn(station);
     Mockito.when(mapper.stationToStationCompactResponse(station)).thenReturn(response);
-    StationCompactResponse result = service.createStation(createStationRequest);
-    assertEquals(name, result.name());
-    assertEquals(code, result.code());
-    assertEquals(stationType, result.type());
-    assertEquals(station.getId(), result.id());
-    assertEquals(station.isEnabled(), result.enable());
+    Station result = service.createStation(createStationRequest);
+    assertEquals(name, result.getName());
+    assertEquals(code, result.getCode());
+    assertEquals(stationType, result.getStationType());
+    assertEquals(station.getId(), result.getId());
+    assertEquals(station.isEnabled(), result.isEnabled());
   }
 
   @Test
@@ -132,7 +132,7 @@ public class StationServiceImplTest {
     Mockito.when(repository.updateStation(Mockito.any())).thenReturn(Optional.of(updatedStation));
     Mockito.when(mapper.stationToStationCompactResponse(updatedStation)).thenReturn(response);
 
-    StationCompactResponse result = service.editStation(editStationRequest);
+    Station result = service.editStation(editStationRequest);
 
     Mockito.verify(repository, Mockito.times(1)).updateStation(Mockito.any());
     Mockito.verify(repository).updateStation(captor.capture());
@@ -140,11 +140,11 @@ public class StationServiceImplTest {
     assertEquals(newCode, captor.getValue().getCode());
     assertEquals(newStationType, captor.getValue().getStationType());
     assertEquals(editStationRequest.enable(), captor.getValue().isEnabled());
-    assertEquals(response.id(), result.id());
-    assertEquals(response.name(), result.name());
-    assertEquals(response.code(), result.code());
-    assertEquals(response.type(), result.type());
-    assertEquals(updatedStation.isEnabled(), result.enable());
+    assertEquals(response.id(), result.getId());
+    assertEquals(response.name(), result.getName());
+    assertEquals(response.code(), result.getCode());
+    assertEquals(response.type(), result.getStationType());
+    assertEquals(updatedStation.isEnabled(), result.isEnabled());
   }
 
   @Test
@@ -232,7 +232,7 @@ public class StationServiceImplTest {
     Station station = Station.builder().name(name).code(code).stationType(stationType).build();
     station.setId(id);
     Mockito.when(repository.findById(id)).thenReturn(Optional.of(station));
-    Station result = service.getStation(id);
+    Station result = service.getStation(id).get();
     assertEquals(station.getId(), result.getId());
     assertEquals(station.getName(), result.getName());
     assertEquals(station.getCode(), result.getCode());
@@ -243,12 +243,12 @@ public class StationServiceImplTest {
   public void itShouldReturnNullWhenIdIsCorrectAndStationDontExist() {
     UUID id = UUID.randomUUID();
     Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
-    assertNull(service.getStation(id));
+    assertTrue(service.getStation(id).isEmpty());
   }
 
   @Test
-  public void itShouldReturnNullWhenIdIsNull() {
-    assertNull(service.getStation(null));
+  public void itShouldReturnEmptyWhenIdIsNull() {
+    assertTrue(service.getStation(null).isEmpty());
   }
 
   @Test
@@ -268,14 +268,14 @@ public class StationServiceImplTest {
             .build();
     Mockito.when(repository.findById(id)).thenReturn(Optional.of(station));
     Mockito.when(mapper.stationToStationCompactResponse(station)).thenReturn(response);
-    Optional<StationCompactResponse> result =
+    Optional<Station> result =
         service.searchStationBySearchStationRequest(searchStationRequest);
     assertTrue(result.isPresent());
-    assertEquals(response.id(), result.get().id());
-    assertEquals(response.name(), result.get().name());
-    assertEquals(response.code(), result.get().code());
-    assertEquals(response.type(), result.get().type());
-    assertEquals(response.enable(), result.get().enable());
+    assertEquals(response.id(), result.get().getId());
+    assertEquals(response.name(), result.get().getName());
+    assertEquals(response.code(), result.get().getCode());
+    assertEquals(response.type(), result.get().getStationType());
+    assertEquals(response.enable(), result.get().isEnabled());
   }
 
   @Test
@@ -283,7 +283,7 @@ public class StationServiceImplTest {
     UUID id = UUID.randomUUID();
     SearchStationRequest searchStationRequest = SearchStationRequest.builder().id(id).build();
     Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
-    Optional<StationCompactResponse> result =
+    Optional<Station> result =
         service.searchStationBySearchStationRequest(searchStationRequest);
     assertFalse(result.isPresent());
   }
@@ -304,14 +304,14 @@ public class StationServiceImplTest {
             .build();
     Mockito.when(repository.findByCode(code)).thenReturn(Optional.of(station));
     Mockito.when(mapper.stationToStationCompactResponse(station)).thenReturn(response);
-    Optional<StationCompactResponse> result =
+    Optional<Station> result =
         service.searchStationBySearchStationRequest(searchStationRequest);
     assertTrue(result.isPresent());
-    assertEquals(response.id(), result.get().id());
-    assertEquals(response.name(), result.get().name());
-    assertEquals(response.code(), result.get().code());
-    assertEquals(response.type(), result.get().type());
-    assertEquals(response.enable(), result.get().enable());
+    assertEquals(response.id(), result.get().getId());
+    assertEquals(response.name(), result.get().getName());
+    assertEquals(response.code(), result.get().getCode());
+    assertEquals(response.type(), result.get().getStationType());
+    assertEquals(response.enable(), result.get().isEnabled());
   }
 
   @Test
@@ -319,7 +319,7 @@ public class StationServiceImplTest {
       itShouldReturnNullWhenSearchStationRequestCodeIsNotNullAndStationWithCodeDoesNotExist() {
     SearchStationRequest searchStationRequest = SearchStationRequest.builder().code(code).build();
     Mockito.when(repository.findByCode(code)).thenReturn(Optional.empty());
-    Optional<StationCompactResponse> result =
+    Optional<Station> result =
         service.searchStationBySearchStationRequest(searchStationRequest);
     assertFalse(result.isPresent());
   }
@@ -352,15 +352,15 @@ public class StationServiceImplTest {
         .thenReturn(searchStationDto);
     Mockito.when(repository.findAll(searchStationDto)).thenReturn(List.of(station));
     Mockito.when(mapper.stationToStationCompactResponse(station)).thenReturn(response);
-    List<StationCompactResponse> result =
+    List<Station> result =
         service.searchAllStationSearchStationRequest(searchStationRequest);
     assertEquals(1, result.size());
-    StationCompactResponse response1 = result.get(0);
-    assertEquals(response.id(), response1.id());
-    assertEquals(response.name(), response1.name());
-    assertEquals(response.code(), response1.code());
-    assertEquals(response.type(), response1.type());
-    assertEquals(response.enable(), response1.enable());
+    Station response1 = result.get(0);
+    assertEquals(response.id(), response1.getId());
+    assertEquals(response.name(), response1.getName());
+    assertEquals(response.code(), response1.getCode());
+    assertEquals(response.type(), response1.getStationType());
+    assertEquals(response.enable(), response1.isEnabled());
   }
 
   @Test
@@ -370,7 +370,7 @@ public class StationServiceImplTest {
     Mockito.when(mapper.searchStationRequestToSearchStationDto(searchStationRequest))
         .thenReturn(searchStationDto);
     Mockito.when(repository.findAll(searchStationDto)).thenReturn(List.of());
-    List<StationCompactResponse> result =
+    List<Station> result =
         service.searchAllStationSearchStationRequest(searchStationRequest);
     assertTrue(result.isEmpty());
   }
@@ -396,15 +396,15 @@ public class StationServiceImplTest {
     Mockito.when(repository.findById(id)).thenReturn(Optional.of(station));
     Mockito.when(repository.updateStation(Mockito.any())).thenReturn(Optional.of(stationUpdated));
     Mockito.when(mapper.stationToStationCompactResponse(stationUpdated)).thenReturn(response);
-    StationCompactResponse result = service.toggleStationStatus(id, stationUpdated.isEnabled());
+    Station result = service.toggleStationStatus(id, stationUpdated.isEnabled());
     Mockito.verify(repository, Mockito.times(1)).updateStation(Mockito.any());
     Mockito.verify(repository).updateStation(captor.capture());
     assertFalse(captor.getValue().isEnabled());
-    assertEquals(response.id(), result.id());
-    assertEquals(response.name(), result.name());
-    assertEquals(response.code(), result.code());
-    assertEquals(response.type(), result.type());
-    assertEquals(response.enable(), result.enable());
+    assertEquals(response.id(), result.getId());
+    assertEquals(response.name(), result.getName());
+    assertEquals(response.code(), result.getCode());
+    assertEquals(response.type(), result.getStationType());
+    assertEquals(response.enable(), result.isEnabled());
   }
 
   @Test
@@ -423,12 +423,12 @@ public class StationServiceImplTest {
             .build();
     Mockito.when(repository.findById(id)).thenReturn(Optional.of(station));
     Mockito.when(mapper.stationToStationCompactResponse(station)).thenReturn(response);
-    StationCompactResponse result = service.toggleStationStatus(id, station.isEnabled());
-    assertEquals(response.id(), result.id());
-    assertEquals(response.name(), result.name());
-    assertEquals(response.code(), result.code());
-    assertEquals(response.type(), result.type());
-    assertEquals(response.enable(), result.enable());
+    Station result = service.toggleStationStatus(id, station.isEnabled());
+    assertEquals(response.id(), result.getId());
+    assertEquals(response.name(), result.getName());
+    assertEquals(response.code(), result.getCode());
+    assertEquals(response.type(), result.getStationType());
+    assertEquals(response.enable(), result.isEnabled());
   }
 
   @Test

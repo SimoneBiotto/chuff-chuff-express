@@ -6,6 +6,8 @@ import it.zuppa.chuff.trainService.dto.train.*;
 import it.zuppa.chuff.trainService.mapper.TrainDataMapper;
 import it.zuppa.chuff.trainService.ports.input.service.TrainService;
 import it.zuppa.chuff.trainService.ports.output.repository.TrainRepository;
+
+import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,15 +27,14 @@ public class TrainServiceImpl implements TrainService {
   }
 
   @Override
-  public TrainCompactResponse createTrain(CreateTrainRequest createTrainRequest)
+  public Train createTrain(CreateTrainRequest createTrainRequest)
       throws DomainException {
     log.info("creating train {}", createTrainRequest);
-    Train trainCreated = repository.save(helper.createTrainEntity(createTrainRequest));
-    return mapper.trainToTrainCompactResponse(trainCreated);
+      return repository.save(helper.createTrainEntity(createTrainRequest));
   }
 
   @Override
-  public TrainCompactResponse updateTrainSchedule(
+  public Train updateTrainSchedule(
       UpdateTrainScheduleRequest updateTrainScheduleRequest) throws DomainException {
     log.info("updating train {}", updateTrainScheduleRequest);
     Train train =
@@ -43,13 +44,11 @@ public class TrainServiceImpl implements TrainService {
                 () ->
                     new DomainException(
                         "Train not found", DomainException.Reason.RESOURCE_NOT_FOUND, Train.class));
-    Train trainUpdated =
-        repository.save(helper.updateTrainSchedule(updateTrainScheduleRequest, train));
-    return mapper.trainToTrainCompactResponse(trainUpdated);
+    return repository.save(helper.updateTrainSchedule(updateTrainScheduleRequest, train));
   }
 
   @Override
-  public TrainResponse updateTrainStations(UpdateTrainStationsRequest updateTrainStationsRequest)
+  public Train updateTrainStations(UpdateTrainStationsRequest updateTrainStationsRequest)
       throws DomainException {
     log.info("updating train {}", updateTrainStationsRequest);
     Train train =
@@ -59,9 +58,7 @@ public class TrainServiceImpl implements TrainService {
                 () ->
                     new DomainException(
                         "Train not found", DomainException.Reason.RESOURCE_NOT_FOUND, Train.class));
-    Train trainUpdated =
-        repository.save(helper.updateTrainStations(updateTrainStationsRequest, train));
-    return mapper.trainToTrainResponse(trainUpdated);
+      return repository.save(helper.updateTrainStations(updateTrainStationsRequest, train));
   }
 
   @Override
@@ -78,7 +75,7 @@ public class TrainServiceImpl implements TrainService {
   }
 
   @Override
-  public TrainCompactResponse toggleTrain(UUID id, boolean enable) throws DomainException {
+  public Train toggleTrain(UUID id, boolean enable) throws DomainException {
     log.info("toggle train with id {}", id);
     Train train =
         repository
@@ -89,16 +86,17 @@ public class TrainServiceImpl implements TrainService {
                         "Train not found", DomainException.Reason.RESOURCE_NOT_FOUND, Train.class));
     if (train.isEnabled() == enable) {
       log.info("train with id {} already in the requested state {}", id, enable);
-      return mapper.trainToTrainCompactResponse(train);
+      return train;
     }
     train.setEnabled(enable);
     Train trainUpdated = repository.save(train);
-    return mapper.trainToTrainCompactResponse(trainUpdated);
+    return trainUpdated;
   }
 
   @Override
-  public Train getTrain(UUID id) {
+  public Optional<Train> getTrain(UUID id) {
     log.info("get train with id {}", id);
-    return repository.findById(id).orElse(null);
+    if (id == null) return Optional.empty();
+    return repository.findById(id);
   }
 }

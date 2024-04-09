@@ -10,21 +10,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface StationService {
-  StationCompactResponse createStation(@Valid CreateStationRequest createStationRequest)
+  Station createStation(@Valid CreateStationRequest createStationRequest)
       throws DomainException;
 
-  StationCompactResponse editStation(@Valid EditStationRequest editStationRequest)
+  Station editStation(@Valid EditStationRequest editStationRequest)
       throws DomainException;
 
   void deleteStation(UUID id) throws DomainException, InvalidParameterException;
 
-  Station getStation(UUID id);
+  Optional<Station> getStation(UUID id);
 
-  Optional<StationCompactResponse> searchStationBySearchStationRequest(
+  Optional<Station> searchStationBySearchStationRequest(
       @Valid SearchStationRequest searchStationRequest) throws InvalidParameterException;
 
-  List<StationCompactResponse> searchAllStationSearchStationRequest(
+  List<Station> searchAllStationSearchStationRequest(
       @Valid SearchStationRequest searchStationRequest) throws InvalidParameterException;
 
-  StationCompactResponse toggleStationStatus(UUID id, boolean enable) throws DomainException;
+  Station toggleStationStatus(UUID id, boolean enable) throws DomainException;
 }

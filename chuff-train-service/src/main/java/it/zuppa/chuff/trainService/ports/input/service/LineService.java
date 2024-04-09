@@ -8,14 +8,16 @@ import it.zuppa.chuff.trainService.dto.line.UpdateLineRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LineService {
-  LineResponse createLine(@Valid CreateLineRequest createLineRequest) throws DomainException;
+  Line createLine(@Valid CreateLineRequest createLineRequest) throws DomainException;
 
   void deleteLine(@NotBlank @NotNull UUID deleteLineRequest) throws DomainException;
 
-  LineResponse editLine(@Valid UpdateLineRequest updateLineRequest) throws DomainException;
+  Line editLine(@Valid UpdateLineRequest updateLineRequest) throws DomainException;
 
-  Line getLine(@NotNull UUID id);
+  Optional<Line> getLine(@NotNull UUID id);
 }

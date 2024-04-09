@@ -65,10 +65,10 @@ public class TrainServiceImplTest {
     Mockito.when(helper.createTrainEntity(request)).thenReturn(train);
     Mockito.when(repository.save(train)).thenReturn(train);
     Mockito.when(mapper.trainToTrainCompactResponse(train)).thenReturn(response);
-    TrainCompactResponse result = service.createTrain(request);
+    Train result = service.createTrain(request);
     assertNotNull(result);
-    assertEquals(response.id(), result.id());
-    assertEquals(response.line().id(), result.line().id());
+    assertEquals(response.id(), result.getId());
+    assertEquals(response.line().id(), result.getLine().getId());
   }
 
   @Test
@@ -124,9 +124,9 @@ public class TrainServiceImplTest {
     Mockito.when(repository.save(trainUpdated)).thenReturn(trainUpdated);
     TrainCompactResponse response = TrainCompactResponse.builder().id(train.getId()).build();
     Mockito.when(mapper.trainToTrainCompactResponse(trainUpdated)).thenReturn(response);
-    TrainCompactResponse result = service.updateTrainSchedule(request);
+    Train result = service.updateTrainSchedule(request);
     assertNotNull(result);
-    assertEquals(response.id(), result.id());
+    assertEquals(response.id(), result.getId());
   }
 
   @Test
@@ -192,9 +192,9 @@ public class TrainServiceImplTest {
     Mockito.when(repository.save(trainUpdated)).thenReturn(trainUpdated);
     TrainResponse response = TrainResponse.builder().id(train.getId()).build();
     Mockito.when(mapper.trainToTrainResponse(trainUpdated)).thenReturn(response);
-    TrainResponse result = service.updateTrainStations(request);
+    Train result = service.updateTrainStations(request);
     assertNotNull(result);
-    assertEquals(response.id(), result.id());
+    assertEquals(response.id(), result.getId());
   }
 
   @Test
@@ -262,10 +262,9 @@ public class TrainServiceImplTest {
     train.setEnabled(true);
     Mockito.when(repository.findById(train.getId())).thenReturn(Optional.of(train));
     TrainCompactResponse response = TrainCompactResponse.builder().id(train.getId()).build();
-    Mockito.when(mapper.trainToTrainCompactResponse(train)).thenReturn(response);
-    TrainCompactResponse result = service.toggleTrain(train.getId(), true);
+    Train result = service.toggleTrain(train.getId(), true);
     assertNotNull(result);
-    assertEquals(response.id(), result.id());
+    assertEquals(response.id(), result.getId());
     Mockito.verify(repository, Mockito.never()).save(train);
   }
 
@@ -288,11 +287,10 @@ public class TrainServiceImplTest {
     TrainCompactResponse response = TrainCompactResponse.builder().id(train.getId()).build();
     ArgumentCaptor<Train> captor = ArgumentCaptor.forClass(Train.class);
     Mockito.when(repository.save(train)).thenReturn(train);
-    Mockito.when(mapper.trainToTrainCompactResponse(train)).thenReturn(response);
-    TrainCompactResponse result = service.toggleTrain(train.getId(), false);
+    Train result = service.toggleTrain(train.getId(), false);
     Mockito.verify(repository).save(captor.capture());
     assertNotNull(result);
-    assertEquals(response.id(), result.id());
+    assertEquals(response.id(), result.getId());
     assertFalse(train.isEnabled());
     assertFalse(captor.getValue().isEnabled());
   }
@@ -302,7 +300,7 @@ public class TrainServiceImplTest {
     Train train = new Train();
     train.setId(UUID.randomUUID());
     Mockito.when(repository.findById(train.getId())).thenReturn(Optional.of(train));
-    Train result = service.getTrain(train.getId());
+    Train result = service.getTrain(train.getId()).orElse(null);
     assertNotNull(result);
     assertEquals(train.getId(), result.getId());
   }
@@ -311,7 +309,7 @@ public class TrainServiceImplTest {
   public void itShouldReturnNullWhenTrainIsNotFound() {
     UUID id = UUID.randomUUID();
     Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
-    Train result = service.getTrain(id);
+    Train result = service.getTrain(id).orElse(null);
     assertNull(result);
   }
 }
