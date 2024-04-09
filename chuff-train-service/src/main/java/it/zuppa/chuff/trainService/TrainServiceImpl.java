@@ -87,6 +87,10 @@ public class TrainServiceImpl implements TrainService {
                 () ->
                     new DomainException(
                         "Train not found", DomainException.Reason.RESOURCE_NOT_FOUND, Train.class));
+    if (train.isEnabled() == enable) {
+      log.info("train with id {} already in the requested state {}", id, enable);
+      return mapper.trainToTrainCompactResponse(train);
+    }
     train.setEnabled(enable);
     Train trainUpdated = repository.save(train);
     return mapper.trainToTrainCompactResponse(trainUpdated);

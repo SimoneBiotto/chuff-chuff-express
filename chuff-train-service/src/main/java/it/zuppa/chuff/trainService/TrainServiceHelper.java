@@ -87,7 +87,7 @@ public class TrainServiceHelper {
     return entity;
   }
 
-  private TrainStop createTrainStopEntity(CreateTrainStopRequest createTrainStopRequest)
+  protected TrainStop createTrainStopEntity(CreateTrainStopRequest createTrainStopRequest)
       throws DomainException {
     Station station = stationService.getStation(createTrainStopRequest.stationId());
     List<String> messageError =
@@ -105,7 +105,7 @@ public class TrainServiceHelper {
         .build();
   }
 
-  private TrainSchedule createTrainSchedule(
+  protected TrainSchedule createTrainSchedule(
       Time startTime, Time endTime, Time repetition, Date startRecurrence, Date endRecurrence)
       throws DomainException {
     List<String> messageError =
